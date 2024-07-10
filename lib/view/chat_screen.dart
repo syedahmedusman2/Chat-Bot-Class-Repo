@@ -13,11 +13,12 @@ class ChatScreen extends StatelessWidget {
       return Scaffold(
         resizeToAvoidBottomInset: true,
         body: ListView.builder(
+            controller: cont.chatScrollController,
             itemCount: cont.chats.length,
             itemBuilder: (context, index) {
               return ChatBubble(
                 isMyChat: cont.chats[index].isMyChat,
-                chatContent: cont.chats[index].chatContent,
+                chatData: cont.chats[index],
               );
             }),
         bottomNavigationBar: Padding(
@@ -31,10 +32,11 @@ class ChatScreen extends StatelessWidget {
                 hintText: "Enter Prompt Here",
                 suffixIcon: InkWell(
                   onTap: () {
-                    cont.addChat(ChatModel(
-                        chatContent: cont.chatFieldController.text,
-                        isMyChat: true,
-                        chatTime: DateTime.now()));
+                    cont.postChatMessage();
+                    // cont.addChat(ChatModel(
+                    //     chatContent: cont.chatFieldController.text,
+                    //     isMyChat: true,
+                    //     chatTime: DateTime.now()));
                   },
                   child: Icon(
                     Icons.send,
